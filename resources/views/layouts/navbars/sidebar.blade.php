@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
                         </span>
                     </div>
                 </a>
@@ -76,13 +76,34 @@
                     </div>
                 </div>
             </form>
+
             <!-- Navigation -->
             <ul class="navbar-nav">
+
+                <!-- Dashboard -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
+
+                <!-- Profile -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                        <i class="ni ni-circle-08 text-primary"></i> {{ __('Profile') }}
+                    </a>
+                </li>
+
+                <!-- Articles -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                        <i class="fas fa-book text-primary"></i> {{ __('Articles') }}
+                    </a>
+                </li>
+
+                
+                <!-- HIDDEN -->
+                @if(false)
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
@@ -117,8 +138,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-bullet-list-67 text-default"></i>
-                      <span class="nav-link-text">Tables</span>
+                        <i class="ni ni-bullet-list-67 text-default"></i>
+                        <span class="nav-link-text">Tables</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -131,11 +152,17 @@
                         <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                     </a>
                 </li>
+                @endif
             </ul>
+
+            <!-- HIDDEN -->
+            @if(false)
             <!-- Divider -->
             <hr class="my-3">
+
             <!-- Heading -->
             <h6 class="navbar-heading text-muted">Documentation</h6>
+
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
@@ -154,6 +181,7 @@
                     </a>
                 </li>
             </ul>
+            @endif
         </div>
     </div>
 </nav>
