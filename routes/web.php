@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ArticleController;
-use App\Models\Article;
+use App\Http\Controllers\CKEditorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
 	// Articles
+	Route::post('ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.image-upload');
 	Route::get('articles', [ArticleController::class, 'index']);
+	Route::get('articles/create', [ArticleController::class, 'create']);
 });
 
