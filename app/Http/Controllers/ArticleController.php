@@ -9,49 +9,58 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::all();
-        return view('article.index', ['articles' => $articles]);
+        $articles = Article::orderBy('views', 'desc')->get();
+        return view('articles.index', ['articles' => $articles]);
     }
 
     public function create()
     {
-        return view('article.edit');
+        return view('articles.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:50',
-            'body' => 'required|min:50'
+            'title' => 'required',
+            'body' => 'required'
         ]);
 
         $article = Article::create([
             'user_id' => 2,
             'title' => $request->input('title'),
-            'body' => $request->input('body'),
-            'created_at' => now()
+            'body' => $request->input('body')
         ]);
 
-        dd($article);
+        if ($article == null) {
+            // TODO
+            return;
+        }
 
-        return response()->json([
-            'success' => true,
-            'article' => $article
-        ]);
+        return redirect()->route('articles.index');
     }
 
     public function edit($id)
     {
-        return view('article.edit', Article::findOrFail($id));
+        $article = Article::findOrFail($id);
+        return view('articles.edit', ['article' => $article]);
     }
 
     public function update(Request $request, $id)
     {
-        // TODO
+        Article::where('id', $id)
+            ->update([
+                'title' => $request->input('title'),
+                'body' => $request->input('body')
+            ]);
+
+        return redirect()->route('articles.index');
     }
 
     public function destroy($id)
     {
-        // TODO
+        $article = Article::find($id);
+        $article->delete();
+
+        return redirect()->route('articles.index');
     }
 }

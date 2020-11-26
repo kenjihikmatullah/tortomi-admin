@@ -88,9 +88,14 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                      <a class="dropdown-item" href="/articles/{{ $article->id }}/edit">Edit</a>
+                      <button class="dropdown-item btn-delete" data-toggle="modal" data-target="#delete-modal" data-id="{{ $article->id }}">Delete</button>
+
+                      <form method="POST" action="/articles/{{ $article->id }}" id="form-{{$article->id}}">
+                        @csrf
+                        @method('DELETE')
+                      </form>
+
                     </div>
                   </div>
                 </td>
@@ -104,4 +109,42 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete for Sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Article deleted from here will still be backed up for 30 days before being deleted permanently
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a id="btn-delete-sure" type="button" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
+
+
+@push('js')
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".btn-delete").click(function(e) {
+      e.preventDefault();
+
+      const id = $(this).data('id');
+
+      $("#btn-delete-sure").click(function() {
+        $(`#form-${id}`).submit();
+      });
+    });
+  });
+</script>
+@endpush

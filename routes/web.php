@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CKEditorController;
 use App\Models\Article;
 
@@ -23,14 +24,27 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 
+	// Auth
+	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+
+	// Article
+	Route::resource('articles', ArticleController::class)->except(['show']);
+
+	// CKEditor
+	Route::post('ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.image-upload');
+
+	// Profile
+	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+
+	// Others
 	Route::get('upgrade', function () {
 		return view('pages.upgrade');
 	})->name('upgrade');
@@ -43,17 +57,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
 		return view('pages.tables');
 	})->name('table');
-
-	// Auth
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
-
-	// Article
-	Route::post('ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.image-upload');
-	// Route::get('articles', [ArticleController::class, 'index'])->name('article.index');
-	// Route::get('articles/create', [ArticleController::class, 'create'])->name('article.create');
-	Route::resource('articles', ArticleController::class)->except(['show']);
-
-	// Profile
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 });
