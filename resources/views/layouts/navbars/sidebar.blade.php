@@ -96,7 +96,7 @@
 
                 <!-- Articles -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                    <a class="nav-link" href="{{ route('articles.index') }}">
                         <i class="fas fa-book text-primary"></i> {{ __('Articles') }}
                     </a>
                 </li>
