@@ -101,6 +101,12 @@
                     </a>
                 </li>
 
+                <!-- Turtle Types -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('turtle-types.index') }}">
+                        <i class="fas fa-book text-primary"></i> {{ __('Turtle Types') }}
+                    </a>
+                </li>
                 
                 <!-- HIDDEN -->
                 @if(false)

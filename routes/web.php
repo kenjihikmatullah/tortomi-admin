@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CKEditorController;
-use App\Models\Article;
+use App\Http\Controllers\TurtleTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
 	// Auth
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
-	// Article
 	Route::resource('articles', ArticleController::class)->except(['show']);
+	Route::resource('turtle-types', TurtleTypeController::class)->except(['show']);
 
 	// CKEditor
 	Route::post('ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.image-upload');

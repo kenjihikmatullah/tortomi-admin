@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -26,7 +27,7 @@ class ArticleController extends Controller
         ]);
 
         $article = Article::create([
-            'user_id' => 2,
+            'user_id' => Auth::user()->id,
             'title' => $request->input('title'),
             'body' => $request->input('body')
         ]);
