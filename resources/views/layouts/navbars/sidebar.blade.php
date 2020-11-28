@@ -107,6 +107,13 @@
                         <i class="fas fa-book text-primary"></i> {{ __('Turtle Types') }}
                     </a>
                 </li>
+
+                <!-- Treatments -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('treatments.index') }}">
+                        <i class="fas fa-book text-primary"></i> {{ __('Treatments') }}
+                    </a>
+                </li>
                 
                 <!-- HIDDEN -->
                 @if(false)

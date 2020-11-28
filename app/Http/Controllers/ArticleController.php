@@ -32,7 +32,8 @@ class ArticleController extends Controller
             'body' => $request->input('body')
         ]);
 
-        if ($article == null) {
+        if ($article == null) 
+        {
             // TODO
             return;
         }

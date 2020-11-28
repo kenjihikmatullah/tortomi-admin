@@ -11,4 +11,9 @@ class TurtleType extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['image_path', 'name', 'description', 'created_at', 'updated_at'];
+
+    public function treatment()
+    {
+        return $this->hasOne('App\Models\Treatment');
+    }
 }
