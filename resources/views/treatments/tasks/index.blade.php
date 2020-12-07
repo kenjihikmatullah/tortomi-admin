@@ -31,52 +31,53 @@
     <div class="col">
       <div class="card bg-default shadow">
         <div class="card-header bg-transparent border-0">
-          <h3 class="text-white mb-0">Treatments</h3>
+          <h3 class="text-white mb-0">Treatment Tasks</h3>
         </div>
-        <div class="table-responsive">
+
+        <!-- Select Treatment -->
+        <select class="form-control w-75 mx-3" data-style="btn btn-link" name="turtle-type" id="select-treatment">
+          @foreach($treatments as $t)
+          <option value="{{ $t->id }}">{{ $t->title }}
+          </option>
+          @endforeach 
+        </select>
+
+
+        <div class="table-responsive mt-3">
           <table class="table align-items-center table-dark table-flush">
             <thead class="thead-dark">
               <tr>
                 <th scope="col" class="sort" data-sort="name">Title</th>
-                <th scope="col" class="sort" data-sort="budget">Turtle Type</th>
-                <th scope="col"></th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody class="list">
-              @foreach($treatments as $t)
+              @foreach($tasks as $t)
               <tr>
+
+                <!-- Title -->
                 <th scope="row">
                   <div class="media align-items-center">
                     <a href="#" class="avatar rounded-circle mr-3">
-                      <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
+                      <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg">
                     </a>
                     <div class="media-body">
                       <span class="name mb-0 text-sm">{{ $t->title }}</span>
                     </div>
                   </div>
                 </th>
-                <td class="budget">
-                  {{ $t->turtleType->name }}
-                </td>
-                <td>
-                  <button 
-                    class="btn btn-success" 
-                    type="button" 
-                    onclick="location.href='/treatments/{{ $t->id }}/tasks'">
-                    Tasks
-                  </button>
-                </td>
+
+                <!-- Action -->
                 <td class="text-right">
                   <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="/treatments/{{ $t->id }}/edit">Edit</a>
+                      <a class="dropdown-item" href="/treatments/{{ $t->treatment->id }}/tasks/{{ $t->id }}/edit" id="form-{{ $t->id }}/edit">Edit</a>
                       <button class="dropdown-item btn-delete" data-toggle="modal" data-target="#delete-modal" data-id="{{ $t->id }}">Delete</button>
 
-                      <form method="POST" action="/treatments/{{ $t->id }}" id="form-{{ $t->id }}">
+                      <form method="POST" action="/treatments/{{ $t->treatment->id }}/tasks/{{ $t->id }}" id="form-{{ $t->id }}">
                         @csrf
                         @method('DELETE')
                       </form>
@@ -105,7 +106,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Article deleted from here will still be backed up for 30 days before being deleted permanently
+        Treatment task deleted from here will still be backed up for 30 days before being deleted permanently
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -121,6 +122,18 @@
 @push('js')
 <script type="text/javascript">
   $(document).ready(function() {
+
+    // Initially select treatment
+    const id = "<?php echo $treatment->id; ?>";
+    $("#select-treatment").val(id);
+
+    // Change treatment
+    $("#select-treatment").change(function() {
+      const id = $(this).val();
+      location.href = `/treatments/${id}/tasks`;
+    });
+
+    // Delete 
     $(".btn-delete").click(function(e) {
       e.preventDefault();
 
