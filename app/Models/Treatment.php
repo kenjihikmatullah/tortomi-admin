@@ -16,4 +16,9 @@ class Treatment extends Model
     {
         return $this->belongsTo('App\Models\TurtleType');
     }
+
+    public function treatmentTasks()
+    {
+        return $this->hasMany('App\Models\TreatmentTask');
+    }
 }

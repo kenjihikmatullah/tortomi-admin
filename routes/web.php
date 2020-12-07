@@ -6,6 +6,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\TreatmentController;
+use App\Http\Controllers\TreatmentTaskController;
 use App\Http\Controllers\TurtleTypeController;
 
 /*
@@ -36,8 +37,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
 	Route::resource('articles', ArticleController::class)->except(['show']);
-	Route::resource('treatments', TreatmentController::class)->except(['show']);
 	Route::resource('turtle-types', TurtleTypeController::class)->except(['show']);
+	Route::resource('treatments', TreatmentController::class)->except(['show']);
+	Route::resource('treatments.tasks', TreatmentTaskController::class)->except(['show']);
 
 	// CKEditor
 	Route::post('ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.image-upload');
