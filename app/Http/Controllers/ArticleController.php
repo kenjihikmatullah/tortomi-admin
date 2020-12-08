@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -22,18 +23,33 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'image' => 'required|file|mimes:jpg,jpeg,png',
             'title' => 'required',
             'body' => 'required'
         ]);
 
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+
+                $image = $request->file('image');
+                $extension = $image->getClientOriginalExtension();
+                $userId = Auth::user()->id;
+                $now = now();
+                $name = "{$userId}_{$now}.{$extension}";
+                $path = Storage::putFileAs('public/articles', $image, $name);
+            } else {
+                // TODO
+            }
+        }
+
         $article = Article::create([
             'user_id' => Auth::user()->id,
             'title' => $request->input('title'),
-            'body' => $request->input('body')
+            'body' => $request->input('body'),
+            'image_path' => isset($path) ? $path : null
         ]);
 
-        if ($article == null) 
-        {
+        if ($article == null) {
             // TODO
             return;
         }
