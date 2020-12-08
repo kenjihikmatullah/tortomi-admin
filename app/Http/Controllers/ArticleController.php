@@ -22,6 +22,8 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
+        $path = null;
+
         $request->validate([
             'image' => 'required|file|mimes:jpg,jpeg,png',
             'title' => 'required',
@@ -32,11 +34,14 @@ class ArticleController extends Controller
             if ($request->file('image')->isValid()) {
 
                 $image = $request->file('image');
+
                 $extension = $image->getClientOriginalExtension();
                 $userId = Auth::user()->id;
-                $now = now();
+                $now = time();
                 $name = "{$userId}_{$now}.{$extension}";
-                $path = Storage::putFileAs('public/articles', $image, $name);
+
+                $isSuccess = Storage::putFileAs('public/articles', $image, $name);
+                if ($isSuccess !== false) $path = "articles/{$name}";
             } else {
                 // TODO
             }
@@ -46,7 +51,7 @@ class ArticleController extends Controller
             'user_id' => Auth::user()->id,
             'title' => $request->input('title'),
             'body' => $request->input('body'),
-            'image_path' => isset($path) ? $path : null
+            'image_path' => $path
         ]);
 
         if ($article == null) {
