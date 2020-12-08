@@ -104,14 +104,14 @@
                 <!-- Turtle Types -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('turtle-types.index') }}">
-                        <i class="fas fa-book text-primary"></i> {{ __('Turtle Types') }}
+                        <i class="fas fa-list text-primary"></i> {{ __('Turtle Types') }}
                     </a>
                 </li>
 
                 <!-- Treatments -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('treatments.index') }}">
-                        <i class="fas fa-book text-primary"></i> {{ __('Treatments') }}
+                        <i class="fas fa-sun text-primary"></i> {{ __('Treatments') }}
                     </a>
                 </li>
                 
