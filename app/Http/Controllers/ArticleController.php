@@ -65,15 +65,43 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::findOrFail($id);
+        $article->transformPath();
         return view('articles.edit', ['article' => $article]);
     }
 
     public function update(Request $request, $id)
     {
+        $currentArticle = Article::findOrFail($id);
+        $path = $currentArticle->image_path;
+
+        // $request->validate([
+        //     'image' => 'required|file|mimes:jpg,jpeg,png',
+        //     'title' => 'required',
+        //     'body' => 'required'
+        // ]);
+
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+
+                $image = $request->file('image');
+
+                $extension = $image->getClientOriginalExtension();
+                $userId = Auth::user()->id;
+                $now = time();
+                $name = "{$userId}_{$now}.{$extension}";
+
+                $isSuccess = Storage::putFileAs('public/articles', $image, $name); // TODO: just replace the exsiting one
+                if ($isSuccess !== false) $path = "articles/{$name}";
+            } else {
+                
+            }
+        }
+
         Article::where('id', $id)
             ->update([
                 'title' => $request->input('title'),
-                'body' => $request->input('body')
+                'body' => $request->input('body'),
+                'image_path' => $path
             ]);
 
         return redirect()->route('articles.index');
