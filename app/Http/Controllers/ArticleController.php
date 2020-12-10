@@ -91,7 +91,15 @@ class ArticleController extends Controller
                 $name = "{$userId}_{$now}.{$extension}";
 
                 $isSuccess = Storage::putFileAs('public/articles', $image, $name); // TODO: just replace the exsiting one
-                if ($isSuccess !== false) $path = "articles/{$name}";
+                if ($isSuccess !== false){
+                    // Delete old image
+                    $oldPath = $path;
+                    $oldPath = 'public/' . $oldPath;
+                    Storage::delete($oldPath);
+
+                    // Update the path
+                    $path = "articles/{$name}";
+                }
             } else {
                 
             }
