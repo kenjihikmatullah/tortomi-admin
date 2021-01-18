@@ -33,14 +33,14 @@
         <div class="card-header bg-transparent border-0">
           <h3 class="text-white mb-0">Articles</h3>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive">  
           <table class="table align-items-center table-dark table-flush">
             <thead class="thead-dark">
               <tr>
                 <th scope="col" class="sort" data-sort="name">Title</th>
                 <th scope="col" class="sort" data-sort="budget">Views</th>
                 <th scope="col" class="sort" data-sort="status">Status</th>
-                <th scope="col">Contributors</th>
+                <th scope="col">Author</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -67,20 +67,7 @@
                   </span>
                 </td>
                 <td>
-                  <div class="avatar-group">
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                      <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                      <img alt="Image placeholder" src="../assets/img/theme/team-2.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                      <img alt="Image placeholder" src="../assets/img/theme/team-3.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                      <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
-                    </a>
-                  </div>
+                  {{ $article->user->name }}
                 </td>
                 <td class="text-right">
                   <div class="dropdown">

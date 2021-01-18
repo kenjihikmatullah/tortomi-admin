@@ -27,4 +27,9 @@ class Article extends Model
 
         unset($this->image_path);
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

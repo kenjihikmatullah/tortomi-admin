@@ -11,7 +11,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::orderBy('views', 'desc')->get();
+        $articles = Article::orderBy('views', 'desc')->with('user')->get();
         return view('articles.index', ['articles' => $articles]);
     }
 
